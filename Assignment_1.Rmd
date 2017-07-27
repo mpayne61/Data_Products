@@ -1,0 +1,37 @@
+---
+title: "Developing Data Products - R Markdown and Leaflet"
+author: "Michael Payne"
+date: "27 July 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## NSW Fines by Postcode for 2016
+ 
+ 
+```{r pressure, echo=FALSE, comment=FALSE, warning=FALSE,message=FALSE}
+library(leaflet)
+
+df <- data.frame(Postcode = c(2795, 2259, 2250, 2540, 2480, 2650, 2460, 2170, 2800, 2560, 2756, 2830, 2850),
+                 latitude = c( -34.11537, -33.30701, -33.46140, -35.20558, -28.98982,
+                           -35.57872, -30.08664, -33.95042, -33.49844, -34.26188, -33.66770, -32.54335, -33.03380),
+                 longitude = c(149.2114, 151.2583, 151.0899, 150.3099, 153.0377, 146.9630, 152.3771, 150.8721, 143.0155,
+                         150.7618, 150.6939, 148.4243, 149.2705),
+                 Revenue1 = c("$92,590,080", "$56,792,421", "$49,449,430", "$47,648,898", "$45,231,764", "$42,717,510",
+                             "$37,327,712", "$36,926,604", "$35,696,192","$35,168,525","$32,693,528","$32,633,499","$30,852,899"),
+                 Revenue = c(92, 56, 49, 47, 45, 42, 37, 36, 35, 35, 32, 32, 30)
+                   )
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 1, radius = sqrt(df$Revenue) * 5000,popup = df$Revenue1) 
+```
+
+
+
+
+
